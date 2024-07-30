@@ -1,18 +1,49 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useNavigation, useRouter } from 'expo-router'
 import { Colors } from './../../../constants/Colors'
 import { Ionicons } from '@expo/vector-icons';
+import { auth } from '../../../configs/FirebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function SignIn() {
   const navigation =useNavigation();
   const router =useRouter();
 
+  const [email, setEmail]=useState();
+  const [password, setPassword]=useState();
+  
   useEffect(()=>{
     navigation.setOptions({
       headerShown:false
     })
   },[])
+
+  const onSignIn=()=>{
+    if(!email&&!password)
+    {
+      ToastAndroid.show("Please Enter Email and Password",ToastAndroid.LONG)
+      return;
+    }
+    signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage,errorCode);
+    if(errorCode=='auth/invalid-credential')
+    {
+      ToastAndroid.show("Invalid credentials",ToastAndroid.LONG)
+    }
+  });
+  }
+
+  
 
   return (
     <View style={{
@@ -55,6 +86,7 @@ export default function SignIn() {
         }}>Email</Text>
         <TextInput 
         style={styles.input} 
+        onChangeText={(value)=>setEmail(value)}
          placeholder='Enter  Email'/>
       </View>
 
@@ -69,10 +101,11 @@ export default function SignIn() {
         <TextInput 
         secureTextEntry={true}
         style={styles.input} 
+        onChangeText={(value)=>setPassword(value)}
          placeholder='Enter Password'/>
       </View>
 {/* For Sign in button */}
-      <TouchableOpacity style={{
+      <TouchableOpacity onPress={onSignIn} style={{
         padding:15,
         marginTop:30,
         backgroundColor:Colors.PRIMARY,
@@ -82,8 +115,7 @@ export default function SignIn() {
         <Text style={{
           color:Colors.WHITE,
           textAlign:'center',
-          fontFamily:'outfit',
-          
+          fontFamily:'outfit', 
         }}>Sign In</Text>
       </TouchableOpacity>
 

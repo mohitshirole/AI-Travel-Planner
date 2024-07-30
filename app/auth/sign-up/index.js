@@ -1,19 +1,49 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useNavigation, useRouter } from 'expo-router'
 import { Colors } from '../../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import { createUserWithEmailAndPassword, getAuth  } from 'firebase/auth';
+import { auth } from '../../../configs/FirebaseConfig';
 
 export default function SignUp() {
   const navigation = useNavigation();
   const router=useRouter();
 
+  const[email,setEmail]=useState();
+  const[password,setPassword]=useState();
+  const[fullName,setFullName]=useState();
+
+  
   useEffect(()=>{
     navigation.setOptions({
       headerShown:false
     })
 
-  }, [])
+  }, []);
+
+  const onCreateAccount=()=>{
+
+    if(!email&&!password&&!fullName)
+    {
+      ToastAndroid.show('Please Enter all Details',ToastAndroid.LONG);
+      return;
+    }
+    createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log(user);
+
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage, errorCode);
+    // ..
+  });
+  }
 
   return (
     <View 
@@ -41,7 +71,8 @@ export default function SignUp() {
         }}>Full Name</Text>
         <TextInput 
         style={styles.input} 
-         placeholder='Enter Full Name'/>
+         placeholder='Enter Full Name'
+         onChangeText={(value)=>setFullName(value)}/>
       </View>
       
 
@@ -54,7 +85,8 @@ export default function SignUp() {
         }}>Email</Text>
         <TextInput 
         style={styles.input} 
-         placeholder='Enter  Email'/>
+         placeholder='Enter  Email'
+         onChangeText={(value)=>setEmail(value)}/>
       </View>
 
 
@@ -68,11 +100,12 @@ export default function SignUp() {
         <TextInput 
         secureTextEntry={true}
         style={styles.input} 
-         placeholder='Enter Password'/>
+         placeholder='Enter Password'
+         onChangeText={(value)=>setPassword(value)}/>
       </View>
 
 {/* Create Account button */}
-<TouchableOpacity style={{
+<TouchableOpacity onPress={onCreateAccount} style={{
         padding:15,
         marginTop:30,
         backgroundColor:Colors.PRIMARY,
@@ -87,7 +120,7 @@ export default function SignUp() {
         }}>Create Account</Text>
       </TouchableOpacity>
 
-      {/* For create Account button */}
+      {/* For Sign in  button */}
       <TouchableOpacity 
         onPress={()=>router.replace('auth/sign-in')}
       

@@ -55,7 +55,7 @@ export default function Login() {
 const styles = StyleSheet.create({
     container:{
         backgroundColor:Colors.WHITE,
-        marginTop:-20,
+        marginTop:-30,
         borderTopLeftRadius:30,
         borderTopRightRadius:30,
         padding:25,
