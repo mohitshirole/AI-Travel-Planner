@@ -1,29 +1,24 @@
-# Welcome to AI TRAVEL  Expo app 👋
+AI Travel Planner App
+Full Stack React Native Application
+Welcome to the AI Travel Planner App! This project is a full-stack mobile application built using React Native, Expo, Gemini, and Firebase. It leverages advanced AI capabilities to help users plan their trips seamlessly. This repository contains the complete source code and documentation for the app.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Features
+User Authentication: Secure user authentication using Firebase Authentication.
+AI-Powered Recommendations: Leverage AI to provide personalized travel recommendations.
+Trip Management: Create, view, and manage your trips with an intuitive interface.
+Realtime Database: Store and retrieve trip data in real-time with Firebase Firestore.
+Offline Support: Persist user sessions and data with AsyncStorage for offline use.
+Notifications: Get notified about upcoming trips and changes.
+Interactive Maps: Integrate maps for a visual representation of trip locations.
+Tech Stack
+React Native: For building cross-platform mobile applications.
+Expo: To streamline the development process and provide tools and services for building and deploying apps.
+Gemini: To utilize AI capabilities for travel recommendations.
+Firebase: Backend-as-a-Service (BaaS) to handle authentication, real-time database, and cloud storage.
+Getting Started
+Prerequisites
+Ensure you have the following installed:
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-
-
+Node.js
+Expo CLI: npm install -g expo-cli
+Firebase account and project setup
